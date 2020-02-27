@@ -1,1 +1,3 @@
 5 roles: not authentificated: guest; authentificated: reviewer, user, moderator, admin
+
+list of watched movies
