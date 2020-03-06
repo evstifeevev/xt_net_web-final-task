@@ -1,3 +1,5 @@
 5 roles: not authentificated: guest; authentificated: reviewer, user, moderator, admin
 
 list of watched movies
+
+display warning if specified email was already used 
