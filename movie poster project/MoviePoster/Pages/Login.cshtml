@@ -3,72 +3,63 @@
 @{
     if (User.Identity.IsAuthenticated)
     {
-        Response.Redirect("~");
+        Response.Redirect("~"); 
     }
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
     string login = Request["name"];
     string pass = Request["pass"];
-    string email = Request["email"];
     string warning = string.Empty;
     int count = Convert.ToInt32(Request["count"]);
     if (IsAjax)
     {
-        if (login != null && pass != null && login != "" && pass != ""
-            && email != null && email != "")
+
+        if (login != null && pass != null && login != "" && pass != "")
         {
-            if (!email.Contains('@'))
+            var userLogic = DependencyResolver.UserLogic;
+            if (login.Contains('@') && userLogic.IsRegistered(email: login)
+                    || userLogic.IsRegistered(login))
             {
-                Response.Write(@"<div id=""warningEmail"">Wrong email.</div>");
-            }
-            else
-            {
-                var userLogic = DependencyResolver.UserLogic;
-                if (userLogic.IsRegistered(email: email))
+                if (userLogic.IsAuthorized(pass, login)
+                    || (userLogic.IsAuthorized(pass, email: login)))
                 {
-                    Response.Write(@"<div id=""warningEmail"">User with specified
-email is already registered. </div>");
-                }
-                else if (userLogic.IsRegistered(login))
-                {
-                    Response.Write(@"<div id=""warningLogin"">User with specified
-login is already registered. </div>");
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        FormsAuthentication.SignOut();
+                    }
+                    FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+                    Response.Write(@"<div id=""registration"">Success!</div>");
                 }
                 else
                 {
-                    var user = new User(login: login, email: email, password: pass);
-                    if (userLogic.Add(user) == null)
-                    {
-                        Response.Write(@"<div id=""errorRegistration"">
-        Registration failed.</div>");
-                    }
-                    else
-                    {
-                        FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
-                        Response.Write(@"<div id=""result"">Success!</div>");
-                    }
+                    Response.Write(@"<div id=""registration"">Wrong password.</div>");
                 }
+
+                //  Response.AddHeader("REFRESH", "3;URL=/Pages/Signup");
+                //FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+                // Message about user's not been registered.
             }
+            else
+            {
+                Response.Write(@"<div id=""registration"">Wrong login or password.</div>");
+                // Handle exception
+            }
+
         }
         else
         {
-            Response.Write(@"<div id=""warningRegistration"">Fill login, email and password fields.</div>");
+            Response.Write(@"<div id=""registration"">Fill login and password fields.</div>");
         }
-
     }
 
 }
 
-<h1> Signup page </h1>
-<form id="signupForm">
+<h1> Login page</h1>
+<form id="loginForm">
 
     <div class="warning"></div>
     <div class="">
-        <label>Login: </label>
+        <label>Login or email: </label>
         <input class="form-control" style="width:200px" type="text" name="name" id="name" value=@login />
-    </div>
-    <div class="">
-        <label>Email: </label>
-        <input class="form-control" style="width:200px" type="text" name="email" id="email" value=@email />
     </div>
     <div class="" style="display:inline">
         <label>Password: </label>
@@ -81,42 +72,25 @@ login is already registered. </div>");
 <script src="~/Scripts/jquery-1.8.0.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#signupForm').on('submit', function (e) {
+        $('#loginForm').on('submit', function (e) {
             e.preventDefault();
+            e.stopPropagation(); // only neccessary if something above is listening to the (default-)event too
 
-            var data = $("#signupForm").serialize();
+            var data = $("#loginForm").serialize();
             $.ajax({
                 type: "post",
-                url: "/Pages/Signup.cshtml",
+                url: "/Pages/Login.cshtml",
                 data: data,
                 success: function (data) {
                     //Create jQuery object from the response HTML.
                     var $response = $(data);
 
                     //Query the jQuery object for the values
-                    var warningReg = $response.filter('#warningRegistration').text();
-                    var warningLogin = $response.filter('#warningLogin').text();
-                    var warningEmail = $response.filter('#warningEmail').text();
-                    var errorReg = $response.filter('#errorRegistration').text();
-                    var result = $response.filter('#result').text();
+                    var result = $response.filter('#registration').text();
                     if (result == 'Success!') {
-                        $(".warning").html('Status: success.' + result);
                         window.location.href = "/index";
                     };
-                    $(".warning").html('');
-                    if (warningReg != '') {
-                        $(".warning").append(warningReg);
-                    }
-                    if (warningLogin != '') {
-                        $(".warning").append(warningLogin);
-                    }
-                    if (warningEmail != '') {
-                        $(".warning").append(warningEmail);
-                    }
-                    if (errorReg != '') {
-                        $(".warning").append(errorReg);
-                    }
-
+                    $(".warning").html('Status: success.' + result);
                 },
                 error: function (result) {
                     $(".warning").innerText = 'Status: error. Wrong login, \
