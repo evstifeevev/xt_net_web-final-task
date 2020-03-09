@@ -20,8 +20,6 @@
     if (IsAjax)
     {
         StringBuilder builder = new StringBuilder();
-        //if (movieLogic.GetAll().Count() > movieCount)
-
 
         movieStart += movieAdd;
         movieCount = movieStart + movieAdd;
@@ -32,11 +30,8 @@
 
             foreach (var movie in movies)
             {
-                // builder.Append("<div class=\"movieWrapper\">");
-                // builder.Append("<label>Title:</label>");
                 builder.Append(movie.Title);
                 builder.Append(' ');
-                //  builder.Append("<div>");
             }
             string str = builder.ToString();
             Response.Write("<div id=\"wrapper\">");
@@ -85,17 +80,12 @@
 
                     //Query the jQuery object for the values
                     var success = $($.parseHTML(data)).filter("#wrapper");
-                    //var success = $("<div>").html(data).find('#wrapper').innerText;
-                    console.log(success); // div#success
-                    //console.log(additionalMovies);
                     $("#add").append(success);
                     var start = $response.filter('#start').text();
-                    console.log(start);
                     if (start != '') {
                         $("#count").html(start);
                     }
                     var isFull = $response.filter('#isFull').text();
-                    console.log(start);
                     if (isFull == 'true') {
                         $("<p>You have reached the end of the list.</p>").insertAfter('#btn');
                         $('#btn').remove();

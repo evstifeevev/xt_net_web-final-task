@@ -138,13 +138,7 @@ namespace MoviePoster.DAL
                             status: reader["status"] as string,
                             description: reader["description"] as string,
                             rating: reader["rating"] as string,
-                            //runtime: (DateTime)reader["runtime"],
                             createdAt: (DateTime)reader["created_at"]
-                            //updatedAt: (DateTime)reader["updated_at"],
-                            //inTheaters: (DateTime)reader["in_theaters"],
-                            //onDiscs: (DateTime)reader["on_discs"],
-                            //budget: (decimal)reader["budget"],
-                            //revenue: (decimal)reader["revenue"]
                             ));
                     }
                 }
@@ -186,9 +180,6 @@ namespace MoviePoster.DAL
                             rating: reader["rating"] as string,
                             runtime: runtime,
                             createdAt: (DateTime)reader["created_at"]
-                            //updatedAt: (DateTime)reader["updated_at"],
-                            //inTheaters: (DateTime)reader["in_theaters"],
-                            //onDiscs: (DateTime)reader["on_discs"]
     );
                         return movie;
                     }
@@ -275,13 +266,7 @@ namespace MoviePoster.DAL
                           status: reader["status"] as string,
                           description: reader["description"] as string,
                           rating: reader["rating"] as string,
-                          //runtime: (DateTime)reader["runtime"],
                           createdAt: (DateTime)reader["created_at"]
-                          //updatedAt: (DateTime)reader["updated_at"],
-                          //inTheaters: (DateTime)reader["in_theaters"],
-                          //onDiscs: (DateTime)reader["on_discs"],
-                          //budget: (decimal)reader["budget"],
-                          //revenue: (decimal)reader["revenue"]
                           ));
                     }
                     return movies;

@@ -55,6 +55,8 @@ namespace MoviePoster.DAL
             }
         }
 
+        #region NOT_IMPLEMENTED
+
         public IEnumerable<Genre> GetAll()
         {
             throw new NotImplementedException();
@@ -63,42 +65,12 @@ namespace MoviePoster.DAL
         public Genre GetById(int id)
         {
             throw new NotImplementedException();
-            //using (Connection conn = new Connection())
-            //{
-            //    using (SqlCommand cmd = new SqlCommand("mov_get_user_by_id", conn.con))
-            //    {
-            //        cmd.CommandType = CommandType.StoredProcedure;
-
-            //        cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = id;
-
-            //        conn.con.Open();
-
-            //        var reader = cmd.ExecuteReader();
-
-            //        while (reader.Read())
-            //        {
-            //            var user = new User(id: (int)reader["id"],
-            //                login: reader["login"] as string,
-            //                email: reader["email"] as string,
-            //                password: reader["password"] as string,
-            //                addressId: (int)reader["address_id"],
-            //                profileId: (int)reader["profile_id"],
-            //                status: reader["email"] as string,
-            //                role: reader["email"] as string,
-            //                createdAt: (DateTime)reader["created_at"],
-            //                updatedAt: (DateTime)reader["updated_at"]
-            //            );
-            //            return user;
-            //        }
-
-            //    }
-            //}
-            //return null;
         }
 
         public void Remove(int id)
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
