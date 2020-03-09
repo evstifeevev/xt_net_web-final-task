@@ -1,0 +1,109 @@
+﻿@using MoviePoster.Entities;
+@using MoviePoster.InversionOfControl;
+@using MoviePoster.BLL.Interfaces;
+@using System.Text;
+
+@{
+    bool IsNeededMore = false;
+    var movieLogic = DependencyResolver.MovieLogic;
+    var movies = new List<Movie>();
+    int movieCount = 2;
+    int movieAdd = 2;
+    int movieStart = 1;
+    if (!int.TryParse(Request["count"], out movieStart))
+    {
+        movieStart = 1;
+    }
+    movies = movieLogic.GetMultiple(movieStart, movieAdd).ToList();
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+    bool.TryParse(Request["more"], out IsNeededMore);
+    if (IsAjax)
+    {
+        StringBuilder builder = new StringBuilder();
+        //if (movieLogic.GetAll().Count() > movieCount)
+
+
+        movieStart += movieAdd;
+        movieCount = movieStart + movieAdd;
+        movies = movieLogic.GetMultiple(movieStart, movieAdd).ToList();
+        if (movies.Count > 0)
+        {
+
+
+            foreach (var movie in movies)
+            {
+                // builder.Append("<div class=\"movieWrapper\">");
+                // builder.Append("<label>Title:</label>");
+                builder.Append(movie.Title);
+                builder.Append(' ');
+                //  builder.Append("<div>");
+            }
+            string str = builder.ToString();
+            Response.Write("<div id=\"wrapper\">");
+            Response.Write(str);
+            Response.Write("</div>");
+            Response.Write("<div id=\"start\">");
+            Response.Write(movieStart);
+            Response.Write("</div>");
+        }
+        else
+        {
+            Response.Write("<div id=\"isFull\">");
+            Response.Write("true");
+            Response.Write("</div>");
+        }
+    }
+}
+
+@foreach (var movie in movies)
+{
+    <div class="movieWrapper">
+        <label>Title:</label>
+        @movie.Title;
+    </div>
+    
+}
+<div id="count" display: none>
+    @movieStart
+</div>
+<div id="add"></div>
+<button id="btn" class="btn btn-primary" style="width:200px">Show more</button>
+
+<script src="~/Scripts/jquery-1.8.0.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "post",
+                url: "/Pages/Movies.cshtml",
+                data: { More: true, Count: $('#count')[0].innerText },
+
+                success: function (data) {
+                    //Create jQuery object from the response HTML.
+                    var $response = $(data);
+
+                    //Query the jQuery object for the values
+                    var success = $($.parseHTML(data)).filter("#wrapper");
+                    //var success = $("<div>").html(data).find('#wrapper').innerText;
+                    console.log(success); // div#success
+                    //console.log(additionalMovies);
+                    $("#add").append(success);
+                    var start = $response.filter('#start').text();
+                    console.log(start);
+                    if (start != '') {
+                        $("#count").html(start);
+                    }
+                    var isFull = $response.filter('#isFull').text();
+                    console.log(start);
+                    if (isFull == 'true') {
+                        $("<p>You have reached the end of the list.</p>").insertAfter('#btn');
+                        $('#btn').remove();
+                    }
+                        
+                }
+            })
+        });
+    })
+
+</script>

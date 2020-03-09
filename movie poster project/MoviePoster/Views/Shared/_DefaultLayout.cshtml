@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+</head>
+<body>
+    <div class="header">
+        <h1>MOVIE POSTER</h1>
+        <hr />
+    </div>
+    <div class="nav">
+        <nav class="user_nav">
+            <ul class="menu">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @User.Identity.Name
+                    <li><a href="~/Pages/Profile">Profile</a></li>
+                    <li><a href="~/Pages/Logout">Logout</a></li>
+                }
+                else
+                {
+                    <li><a href="~/Pages/Login">Login</a></li>
+                    <li><a href="~/Pages/Signup">Sign up</a></li>
+                }
+            </ul>
+            <hr />
+        </nav>
+        <nav class="site_nav">
+            <ul class="menu">
+                <li><a href="~/index">Main</a></li>
+                <li><a href="~/Pages/Search.cshtml">Search</a></li>
+                <li><a href="~/Pages/Movies">Movies</a></li>
+            </ul>
+            @if (User.IsInRole("admin"))
+            {
+                <ul class="adminMenu">
+                    <li><a href="~/index">Users</a></li>
+                </ul>
+            }
+
+        </nav>
+    </div>
+    @RenderBody()
+    <div class="sidebar">
+        <div class="search">
+
+        </div>
+    </div>
+    <footer>
+        @if (IsSectionDefined("Footer"))
+        {
+            @RenderSection("Footer")
+        }
+        else
+        {
+            <span>Footer default content.</span>
+        }
+    </footer>
+</body>
+</html>

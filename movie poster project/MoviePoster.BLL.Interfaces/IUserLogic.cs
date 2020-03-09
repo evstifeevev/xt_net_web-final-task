@@ -13,6 +13,10 @@ namespace MoviePoster.BLL.Interfaces
         void Remove(int id);
         User GetById(int id);
         IEnumerable<User> GetAll();
+        IEnumerable<User> GetMultiple(int start, int count);
+        bool IsRegistered(string login = null, string email = null);
+        bool IsAuthorized(string password, string login = null, string email = null);
+        string GetUserRole(string login);
         void ChangeLogin(int userId, string login);
 
         void ChangeEmail(int userId, string email);

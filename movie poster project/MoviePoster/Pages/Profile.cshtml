@@ -1,0 +1,130 @@
+﻿@using MoviePoster.InversionOfControl;
+@using MoviePoster.Entities;
+@using MoviePoster.Logger;
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+    // Profile fields.
+    string name = string.Empty;
+    string lastName = string.Empty;
+    string patronymicName = string.Empty;
+    string gender = string.Empty;
+    string phone = string.Empty;
+    DateTime? birthday = null;
+    // Address fields.
+    string streetNumber = string.Empty;
+    string country = string.Empty;
+    string city = string.Empty;
+    string postcode = string.Empty;
+    string state = string.Empty;
+    string streetName = string.Empty;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        var userLogic = DependencyResolver.UserLogic;
+        var user = userLogic.GetAll().First(x => x.Login == User.Identity.Name);
+
+        var addressLogic = DependencyResolver.AddressLogic;
+        var address = addressLogic.GetById(userId: user.Id);
+        if (address != null)
+        {
+            country = address.Country;
+            city = address.City;
+            postcode = address.Postcode;
+            state = address.State;
+            streetName = address.StreetName;
+            streetNumber = address.StreetNumber;
+        }
+
+        var profileLogic = DependencyResolver.ProfileLogic;
+        var profile = profileLogic.GetById(userId: user.Id);
+        if (profile != null)
+        {
+            name = profile.FirstName;
+            lastName = profile.LastName;
+            patronymicName = profile.PatromymicName;
+            gender = profile.Gender;
+            phone = profile.Phone;
+            birthday = profile.Birthday;
+        }
+    }
+}
+
+<h2> Account </h2>
+<br />
+<form id="profileForm">
+    <h3> Profile </h3>
+    <div class="profileWarning"></div>
+    <div class="">
+        <label>First name </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="name" id="name" value="@name" />
+    </div>
+    <div class="">
+        <label>Last name </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="lastName" id="lastName" value="@lastName" />
+    </div>
+    <div class="">
+        <label>Patronymic Name </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="patronymicName" id="patronymicName" value="@patronymicName" />
+    </div>
+    <div class="">
+        <label>Birthday </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="birthday" id="birthday" value="@birthday.ToString()" />
+    </div>
+    <div class="">
+        <label>Gender </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="gender" id="gender" value="@gender" />
+    </div>
+    <div class="">
+        <label>Phone </label>
+        <input class="form-control" style="width:200px" type="text"
+               readonly name="phone" id="phone" value="@phone" />
+    </div>
+    <button id="btn" class="btn btn-primary" style="width:200px">Edit account</button>
+</form>
+
+<form id="addressForm">
+    <h3> Address </h3>
+    <div class="addressWarning"></div>
+    <div class="">
+        <div class="">
+            <label>Country </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="country" id="country" value="@country" />
+        </div>
+        <div class="">
+            <label>City </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="city" id="city" value="@city" />
+        </div>
+        <div class="">
+            <label>Postcode </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="postcode" id="postcode" value="@postcode" />
+        </div>
+        <div class="">
+            <label>State </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="state" id="state" value="@state" />
+        </div>
+        <div class="">
+            <label>Street name </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="streetName" id="streetName" value="@streetName" />
+        </div>
+        <div class="">
+            <label>Street number </label>
+            <input class="form-control" style="width:200px" type="text"
+                   readonly name="streetNumber" id="streetNumber" value="@streetNumber" />
+        </div>
+    </div>
+    <button id="btn" class="btn btn-primary" style="width:200px">Edit address</button>
+</form>

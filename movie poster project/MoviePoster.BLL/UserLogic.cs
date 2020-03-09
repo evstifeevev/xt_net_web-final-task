@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using MoviePoster.BLL.Interfaces;
 using MoviePoster.Entities;
 using MoviePoster.DAL.Interfaces;
+using MoviePoster.Logger;
 
 namespace MoviePoster.BLL
 {
     public class UserLogic : IUserLogic
     {
         private readonly IUserDao _userDao;
-        
+
         public UserLogic(IUserDao userDao)
         {
             this._userDao = userDao;
@@ -20,8 +21,16 @@ namespace MoviePoster.BLL
 
         public User Add(User user)
         {
+            if (user.Password == string.Empty)
+            {
+                user.Role = "reviewer";
+            }
+            user.CreatedAt = DateTime.Now;
+            //user.Password = user.Password.GetHashCode().ToString();
             return _userDao.Add(user);
         }
+
+
 
         public void AddAddressById(int userId, int addressId)
         {
@@ -66,6 +75,37 @@ namespace MoviePoster.BLL
         public User GetById(int id)
         {
             return _userDao.GetById(id);
+        }
+
+        public IEnumerable<User> GetMultiple(int start, int count)
+        {
+            return _userDao.GetMultiple(start, count);
+        }
+
+        public string GetUserRole(string login)
+        {
+            return _userDao.GetUserRole(login);
+        }
+
+        public bool IsRegistered(string login = null, string email = null)
+        {
+            if (login == null && email == null)
+            {
+                // Handle exception.
+            }
+            return _userDao.IsRegistered(login, email);
+        }
+
+        public bool IsAuthorized(string password, string login = null, string email = null)
+        {
+            if (login == null && email == null)
+            {
+                Logger.Logger.Log.Error(new ArgumentNullException("login, email",
+                    "Login and email were not specified"));
+                return false;
+            }
+            return _userDao.GetAll().Any(x => (x.Login == login || x.Email == email)
+            && x.Password == password);
         }
 
         public void Remove(int id)

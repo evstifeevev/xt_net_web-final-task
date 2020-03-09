@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FBDBC7FD-3A12-46F9-9359-BF5BDD622BD8}</ProjectGuid>
+    <ProjectGuid>{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MoviePoster.DAL</RootNamespace>
-    <AssemblyName>MoviePoster.DAL</AssemblyName>
+    <RootNamespace>MoviePoster.InversionOfControl</RootNamespace>
+    <AssemblyName>MoviePoster.InversionOfControl</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,22 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressDao.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="GenreDao.cs" />
-    <Compile Include="MovieDao.cs" />
-    <Compile Include="ProfileDao.cs" />
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserDao.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entities\MoviePoster.Entities.csproj">
-      <Project>{75309e81-14b0-46f8-814a-b05dd77f069e}</Project>
-      <Name>MoviePoster.Entities</Name>
+    <ProjectReference Include="..\MoviePoster.BLL.Interfaces\MoviePoster.BLL.Interfaces.csproj">
+      <Project>{749a6820-20ac-4ce9-908a-59806c13fe31}</Project>
+      <Name>MoviePoster.BLL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoviePoster.BLL\MoviePoster.BLL.csproj">
+      <Project>{78974561-e15e-482a-8d40-9f0f30600e12}</Project>
+      <Name>MoviePoster.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\MoviePoster.DAL.Interfaces\MoviePoster.DAL.Interfaces.csproj">
       <Project>{51f15538-fc62-4331-8c75-3d087c4433c5}</Project>
       <Name>MoviePoster.DAL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoviePoster.DAL\MoviePoster.DAL.csproj">
+      <Project>{fbdbc7fd-3a12-46f9-9359-bf5bdd622bd8}</Project>
+      <Name>MoviePoster.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

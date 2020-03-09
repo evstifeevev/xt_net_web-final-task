@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAddressDao.cs" />
+    <Compile Include="IGendreDao.cs" />
     <Compile Include="IMovieDao.cs" />
+    <Compile Include="IProfileDao.cs" />
     <Compile Include="IUserDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

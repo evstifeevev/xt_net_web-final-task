@@ -1,0 +1,36 @@
+﻿@using MoviePoster.InversionOfControl;
+@using MoviePoster.Entities;
+@{
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+    string requestedItem = Request["requestedItem"];
+    string warning = string.Empty;
+    var movies = new List<Movie>();
+    int count = 0;
+    if (IsPost)
+    {
+        var movieLogic = DependencyResolver.MovieLogic;
+        movies = movieLogic.SearchMovie(requestedItem).ToList();
+        count = movies.Count();
+    }
+}
+
+<h1> Signup page </h1>
+<form id="searchForm" action="~/Pages/Search.cshtml" method="post">
+
+    <div class="warning"></div>
+    <div class="">
+        Found: @count
+    </div>
+    <div class="">
+        <label>Search: </label>
+        <input class="form-control" style="width:200px" type="text" name="requestedItem" id="requestedItem" value="@requestedItem" />
+    </div>
+    <button id="btn" class="btn btn-primary" style="width:200px">Search</button>
+    @foreach (var movie in movies)
+    {
+        <div class="movieWrapper">
+            <label>Title:</label>
+            @movie.Title;
+        </div>
+    }
+</form>

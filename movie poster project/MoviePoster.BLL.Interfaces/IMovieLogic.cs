@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MoviePoster.Entities;
 
-namespace MoviePoster.DAL.Interfaces
+namespace MoviePoster.BLL.Interfaces
 {
-    public interface IMovieDao
+    public interface IMovieLogic
     {
         Movie Add(Movie movie);
         void Remove(int id);

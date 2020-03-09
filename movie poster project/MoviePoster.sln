@@ -23,7 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviePoster.BLL", "MoviePos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviePoster.BLL.Interfaces", "MoviePoster.BLL.Interfaces\MoviePoster.BLL.Interfaces.csproj", "{749A6820-20AC-4CE9-908A-59806C13FE31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InversionOfControl", "InversionOfControl\InversionOfControl.csproj", "{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviePoster.InversionOfControl", "InversionOfControl\MoviePoster.InversionOfControl.csproj", "{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logger", "Logger", "{F7514503-336B-4F10-8530-F5CF31F85C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviePoster.Logger", "MoviePoster.Logger\MoviePoster.Logger.csproj", "{0743E194-9B03-4982-9711-821C0A272EAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,10 @@ Global
 		{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0743E194-9B03-4982-9711-821C0A272EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0743E194-9B03-4982-9711-821C0A272EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0743E194-9B03-4982-9711-821C0A272EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0743E194-9B03-4982-9711-821C0A272EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +78,7 @@ Global
 		{78974561-E15E-482A-8D40-9F0F30600E12} = {BED78B39-9027-401A-A6C2-F8928FB2E348}
 		{749A6820-20AC-4CE9-908A-59806C13FE31} = {BED78B39-9027-401A-A6C2-F8928FB2E348}
 		{84EFCAEB-407E-4765-AB7D-0B17AA9C7BF4} = {9E0555C6-0BF6-4CA3-9055-DF2491946E57}
+		{0743E194-9B03-4982-9711-821C0A272EAF} = {F7514503-336B-4F10-8530-F5CF31F85C38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9582F058-71AE-4D89-8DF3-5CF9272EB7D4}

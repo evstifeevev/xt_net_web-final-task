@@ -21,8 +21,8 @@ namespace MoviePoster.Entities
         public int AddressId { get; set; }
 
         #endregion
-        public User(int id, string login, string email
-            , string role, DateTime createdAt, 
+        public User(string login, string email
+            , int id = 0, string role = "", DateTime createdAt = default, 
             DateTime updatedAt = default,
             string password = "", string status = "", 
             int profileId = 0, int addressId = 0) {
@@ -32,10 +32,14 @@ namespace MoviePoster.Entities
                 this.Login = login;
                 this.Password = password;
                 this.Email = email;
+                this.AddressId = addressId;
+                this.ProfileId = profileId;
                 this.Role = role;
                 this.CreatedAt = createdAt;
                 this.UpdatedAt = updatedAt;
                 this.Status = status;
+
+
             }
             catch
             {

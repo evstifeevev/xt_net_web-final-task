@@ -1,0 +1,129 @@
+﻿@using MoviePoster.InversionOfControl;
+@using MoviePoster.Entities;
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+    string login = Request["name"];
+    string pass = Request["pass"];
+    string email = Request["email"];
+    string warning = string.Empty;
+    int count = Convert.ToInt32(Request["count"]);
+    if (IsAjax)
+    {
+        if (login != null && pass != null && login != "" && pass != ""
+            && email != null && email != "")
+        {
+            if (!email.Contains('@'))
+            {
+                Response.Write(@"<div id=""warningEmail"">Wrong email.</div>");
+            }
+            else
+            {
+                var userLogic = DependencyResolver.UserLogic;
+                if (userLogic.IsRegistered(email: email))
+                {
+                    Response.Write(@"<div id=""warningEmail"">User with specified
+        email is already registered. </div>");
+                }
+                else if (userLogic.IsRegistered(login))
+                {
+                    Response.Write(@"<div id=""warningLogin"">User with specified
+        login is already registered. </div>");
+                }
+                else
+                {
+                    var user = new User(login: login, email: email, password: pass);
+                    if (userLogic.Add(user) == null)
+                    {
+                        Response.Write(@"<div id=""errorRegistration"">
+                Registration failed.</div>");
+                    }
+                    else
+                    {
+                        FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+                        Response.Write(@"<div id=""result"">Success!</div>");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Response.Write(@"<div id=""warningRegistration"">Fill login, email and password fields.</div>");
+        }
+
+    }
+
+}
+
+<h1> Signup page </h1>
+<form id="signupForm">
+
+    <div class="warning"></div>
+    <div class="">
+        <label>Login: </label>
+        <input class="form-control" style="width:200px" type="text" name="name" id="name" value=@login />
+    </div>
+    <div class="">
+        <label>Email: </label>
+        <input class="form-control" style="width:200px" type="text" name="email" id="email" value=@email />
+    </div>
+    <div class="" style="display:inline">
+        <label>Password: </label>
+        <input class="form-control" style="width:200px" type="password" name="pass" id="pass" value=@pass />
+    </div>
+    <button id="btn" class="btn btn-primary" style="width:200px">Register</button>
+
+</form>
+
+<script src="~/Scripts/jquery-1.8.0.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#signupForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $("#signupForm").serialize();
+            $.ajax({
+                type: "post",
+                url: "/Pages/Signup.cshtml",
+                data: data,
+                success: function (data) {
+                    //Create jQuery object from the response HTML.
+                    var $response = $(data);
+
+                    //Query the jQuery object for the values
+                    var warningReg = $response.filter('#warningRegistration').text();
+                    var warningLogin = $response.filter('#warningLogin').text();
+                    var warningEmail = $response.filter('#warningEmail').text();
+                    var errorReg = $response.filter('#errorRegistration').text();
+                    var result = $response.filter('#result').text();
+                    if (result == 'Success!') {
+                        $(".warning").html('Status: success.' + result);
+                        window.location.href = "/index";
+                    };
+                    $(".warning").html('');
+                    if (warningReg !='') {
+                        $(".warning").append(warningReg);
+                    }
+                    if (warningLogin  !='') {
+                        $(".warning").append(warningLogin);
+                    }
+                    if (warningEmail  !='') {
+                        $(".warning").append(warningEmail);
+                    }
+                    if (errorReg  !='') {
+                        $(".warning").append(errorReg);
+                    }
+                    
+                },
+                error: function (result) {
+                    $(".warning").innerText = 'Status: error. Wrong login, \
+                    email or password. Try again.';
+                }
+            })
+        });
+    })
+
+</script>
