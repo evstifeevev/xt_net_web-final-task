@@ -91,13 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\ErrorPage.css" />
-    <Content Include="Content\Login.css" />
-    <Content Include="Content\Main.css" />
-    <Content Include="Content\Movies.css" />
-    <Content Include="Content\Profile.css" />
-    <Content Include="Content\Search.css" />
-    <Content Include="Content\Signup.css" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Signup.cshtml" />
     <Content Include="Pages\Logout.cshtml" />
@@ -115,6 +108,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Styles\Main.css" />
+    <Content Include="Styles\MovieWrapper.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

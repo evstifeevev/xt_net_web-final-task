@@ -1,0 +1,11 @@
+﻿.movieWrapper {
+    padding: 10px;
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px rgb(000,20,255,0.1);
+    border-radius: 5px;
+    background: rgb(0,20,25,0.01);
+}
