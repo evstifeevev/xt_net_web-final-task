@@ -28,7 +28,6 @@ body {
 }
 
 .header {
-    position: sticky;
     top: -100px;
     display: flex;
     justify-content: center;
@@ -43,9 +42,9 @@ hr {
 }
 
 .nav {
-    position: sticky;
-    top: 110px;
     display: flex;
+    position: relative;
+    top: 10px;
     justify-content: space-between;
     margin: 0 20px;
 }
